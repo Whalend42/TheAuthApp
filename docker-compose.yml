@@ -10,6 +10,7 @@ services:
       - "3000:8080"
     volumes:
       - .:/usr/src/app
+    command: npm run start:dev
 
   db:
     container_name: db.the-auth-app
