@@ -1,20 +1,10 @@
-import { ConParamInterface } from "./ConParamInterface.ts";
+import { ConParamInterface } from "./ConParamInterface";
+import { IpAddr } from "@app/common/valueobjects/IpAddr"
+import { Port } from "@app/common/valueobjects/Port"
 
 export class ConParam implements ConParamInterface {
-  private host: string;
-  private port: string;
 
-  constructor(host: string, port: string) {
-    this.host = host;
-    this.port = port;
-  }
-
-  host(): string {
-    return this.host;
-  }
-
-  port(): string {
-    return this.port;
+  constructor(readonly host: IpAddr, readonly port: Port) {
   }
 
 }
