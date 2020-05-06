@@ -1,8 +1,8 @@
 import { ConParamInterface } from "./ConParamInterface.ts";
 
 export class ConParam implements ConParamInterface {
-  const host: string;
-  const port: string;
+  private host: string;
+  private port: string;
 
   constructor(host: string, port: string) {
     this.host = host;

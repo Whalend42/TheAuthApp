@@ -3,7 +3,7 @@ import { ConParamInterface } from "ConParamInterface.ts";
 
 export class Client implements ClientInterface {
   
-  const conParameter: ConParamInterface;
+  private conParameter: ConParamInterface;
 
   constructor(conParameter: ConParamInterface) {
     this.conParameter = conParameter;
