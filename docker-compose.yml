@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  
+  web:
+    container_name: web.the-auth-app
+    build: 
+      context: .
+      dockerfile: .docker/node/Dockerfile
+    ports:
+      - "3000:8080"
+    volumes:
+      - .:/usr/src/app
+
+  db:
+    container_name: db.the-auth-app
+    image: postgres
+    # restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+
+  adminer:
+    container_name: adminer.the-auth-app
+    image: adminer
+    # restart: always
+    ports:
+      - 8080:8080
