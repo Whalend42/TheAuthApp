@@ -25,3 +25,7 @@ services:
     # restart: always
     ports:
       - 8080:8080
+
+  redis:
+    container_name: redis.the-auth-app
+    image: "redis:alpine"
