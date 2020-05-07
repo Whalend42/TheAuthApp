@@ -21,8 +21,14 @@ test("check Port type assertion", () => {
 
 test("ConParam can be instantiated correctly", () => {
   const ip = new IpAddr("127.0.0.1");
-  const port = new Port(12345);
+  const port = new Port(6379);
   const conParam = new ConParam(ip, port);
   expect(conParam.host.value).toBe("127.0.0.1");
-  expect(conParam.port.value).toBe(12345);
+  expect(conParam.port.value).toBe(6379);
+});
+
+test("Connect client", () => {
+  const conParam = new ConParam(new IpAddr("127.0.0.1"), new Port(6379));
+  const client = new Client(conParam);
+  client.connect();
 });
