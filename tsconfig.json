@@ -24,12 +24,8 @@
     "noFallthroughCasesInSwitch": false,
 
     "moduleResolution": "node",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "esModuleInterop": true,
-    
-    "paths": {
-      "@app/*": ["src/*"]
-    },
 
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
