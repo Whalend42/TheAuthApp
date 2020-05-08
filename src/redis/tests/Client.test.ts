@@ -53,7 +53,7 @@ test("Invalid connection client fail", async () => {
   jest.setTimeout(1000 * 10);
   const conParam = new ConParam("redis://bar:2222");
   const client = new Client(conParam);
-  expect(async () => {
-    await client.connect();
-  }).toThrow();
+  await expect(client.connect())
+  .rejects
+  .toThrow();
 });
