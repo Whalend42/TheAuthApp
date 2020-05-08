@@ -30,12 +30,10 @@ export class Client implements ClientInterface {
 
       return new Promise<void>((resolve, reject) => {
         this._client.on("ready", () => {
-          console.log("ready");
           resolve();
         });
         this._client.on("error", (error) => {
-          console.error(error);
-          reject(new Error('something failed '+error));
+          reject(new Error(error));
         });
       });
     }
@@ -48,7 +46,6 @@ export class Client implements ClientInterface {
     if (this._client !== null) {
       return new Promise<void>(resolve => {
         this._client.quit(() => {
-          console.log("quitted");
           resolve();
         });
       });

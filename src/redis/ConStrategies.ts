@@ -17,8 +17,7 @@ export class TimeoutConStrat implements ConStrategyInterface {
 
         return (options: StrategyOptionInterface) => {
             if (options.total_retry_time > timeoutInMs) {
-                console.log("should go in error NOW!");
-                return new Error("Retry time exhausted");
+                return new Error("Retry time ("+timeoutInMs+" [ms]) exhausted");
             }
             // if (options.attempt > 10) {
             // if (options.times_connected < 1 && options.attempt > 5) {
@@ -43,7 +42,7 @@ export class AttemptsConStrat implements ConStrategyInterface {
 
         return (options: StrategyOptionInterface) => {
             if (options.attempt > this.attempts) {
-                throw new Error("Retry time exhausted");
+                throw new Error("Retry attempts ("+this.attempts+") exhausted");
             }
             // if (options.attempt > 10) {
             // if (options.times_connected < 1 && options.attempt > 5) {
