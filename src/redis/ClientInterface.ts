@@ -1,5 +1,6 @@
 export interface ClientInterface {
-  connect(): void;
-  setStr(val: string, key: string): void;
-  getStr(key: string): string;
+  connect(): Promise<void>;
+  quit(): Promise<void>;
+  setStr(val: string, key: string): Promise<void>;
+  getStr(key: string): Promise<string>;
 }

@@ -1,5 +1,6 @@
 import { ClientInterface } from "./ClientInterface";
-import { ConParamInterface } from "./ConParamInterface";
+import { ConParamInterface, ConfigTypes } from "./ConParamInterface";
+import { TimeoutConStrat } from "./ConStrategies"
 import redis from "redis";
 
 export class Client implements ClientInterface {
@@ -12,32 +13,78 @@ export class Client implements ClientInterface {
     this._client = null;
   }
 
-  connect(): void {
-    console.log("connection");
+  connect(): Promise<void> {
     if (this._client === null) {
+      const strat = new TimeoutConStrat(2);
       const options = {
-        retry_strategy: function(options) {
-          const timeoutInMs = 1000 * 60 * 5;
-          if (options.total_retry_time > timeoutInMs) {
-            return new Error("Retry time exhausted");
-          }
-          // if (options.attempt > 10) {
-          // if (options.times_connected < 1 && options.attempt > 5) {
-          // if (options.error && options.error.code === "ECONNREFUSED") {
-          return Math.min(options.attempt * 100, 3000);
-        },
+        retry_strategy: strat.strategy()
       };
-      this._client = redis.createClient(this.conParameter.port.value, this.conParameter.host.value, options);
+      
+      if (this.conParameter.configType === ConfigTypes.ip_and_port) {
+        this._client = redis.createClient(this.conParameter.port.value, this.conParameter.host.value, options);
+      } else if (this.conParameter.configType === ConfigTypes.url) {
+        this._client = redis.createClient(this.conParameter.url, options);
+      } else {
+        throw new Error("No valid connection parameter given");
+      }
+
+      return new Promise<void>((resolve, reject) => {
+        this._client.on("ready", () => {
+          console.log("ready");
+          resolve();
+        });
+        this._client.on("error", (error) => {
+          console.error(error);
+          reject(new Error('something failed '+error));
+        });
+      });
     }
+    return new Promise<void>(resolve => {
+      resolve();
+    });
   }
 
-  setStr(val: string, key: string): void {
-    console.log("set");
+  quit(): Promise<void> {
+    if (this._client !== null) {
+      return new Promise<void>(resolve => {
+        this._client.quit(() => {
+          console.log("quitted");
+          resolve();
+        });
+      });
+    }
+    return new Promise<void>(resolve => {
+      resolve();
+    });
   }
 
-  getStr(key: string): string {
-    console.log("get");
-    return "dummy";
+  async setStr(key: string, val: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._client.set(
+        key,
+        val,
+        (err) => {
+          if (err) {
+            reject(new Error('failed to fetch key: '+key));
+          } else {
+            resolve();
+          }
+        });
+    });
+  }
+
+  async getStr(key: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this._client.get(
+        key,
+        (err, reply) => {
+          if (err) {
+            reject(new Error('failed to fetch key: '+key));
+          } else {
+            resolve(reply);
+          }
+        });
+    });
   }
 
 }
