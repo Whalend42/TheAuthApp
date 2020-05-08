@@ -1,5 +1,5 @@
-import { IpAddr } from "@app/common/valueobjects/IpAddr"
-import { Port } from "@app/common/valueobjects/Port"
+import { IpAddr } from "common/valueobjects/IpAddr";
+import { Port } from "common/valueobjects/Port";
 
 export interface ConParamInterface {
   readonly host: IpAddr;

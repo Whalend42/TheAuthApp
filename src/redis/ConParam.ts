@@ -1,6 +1,6 @@
 import { ConParamInterface, ConfigTypes } from "./ConParamInterface";
-import { IpAddr } from "@app/common/valueobjects/IpAddr"
-import { Port } from "@app/common/valueobjects/Port"
+import { IpAddr } from "common/valueobjects/IpAddr";
+import { Port } from "common/valueobjects/Port";
 
 export class ConParam implements ConParamInterface {
 
@@ -22,12 +22,12 @@ export class ConParam implements ConParamInterface {
   constructor(url: string);
   constructor();
   constructor(...args: any) {
-    if (typeof args[0] === IpAddr && typeof args[1] === Port) {
+    if (args[0] instanceof IpAddr && args[1] instanceof Port) {
       this.host = args[0];
       this.port = args[1];
       this.url = "";
       this.configType = ConfigTypes.ip_and_port;
-    } else if (typeof args[0] === string) {
+    } else if (typeof args[0] === "string") {
       this.host = IpAddr.Null;
       this.port = Port.Null;
       this.url = args[0];
