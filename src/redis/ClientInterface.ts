@@ -1,7 +1,6 @@
-import { ConParamInterface } from "./ConParamInterface";
-
-interface ClientInterface {
-  connect(parameters: ConParamInterface): void;
-  set(val: string, key: string): void;
-  get(key: string): string;
+export interface ClientInterface {
+  connect(): Promise<void>;
+  quit(): Promise<void>;
+  setStr(val: string, key: string): Promise<void>;
+  getStr(key: string): Promise<string>;
 }

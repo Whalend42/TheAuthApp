@@ -15,7 +15,7 @@
     "strictFunctionTypes": true,
     "strictBindCallApply": false,
     "strictPropertyInitialization": true,
-    "noImplicitThis": false,
+    "noImplicitThis": true,
     "alwaysStrict": true,
 
     "noUnusedLocals": false,
@@ -24,9 +24,8 @@
     "noFallthroughCasesInSwitch": false,
 
     "moduleResolution": "node",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "esModuleInterop": true,
-
 
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
