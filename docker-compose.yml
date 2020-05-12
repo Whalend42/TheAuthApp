@@ -12,19 +12,21 @@ services:
       - .:/usr/src/app
     command: npm run start:dev
 
-  #db:
-  #  container_name: db.the-auth-app
-  #  image: postgres
+  db:
+    container_name: db.the-auth-app
+    image: postgres
     # restart: always
-  #  environment:
-  #    POSTGRES_PASSWORD: example
+    environment:
+      POSTGRES_PASSWORD: thepwd
+      POSTGRES_USER: theuser
+      POSTGRES_DB: db
 
-  #adminer:
-  #  container_name: adminer.the-auth-app
-  #  image: adminer
+  adminer:
+    container_name: adminer.the-auth-app
+    image: adminer
     # restart: always
-  #  ports:
-  #    - 8080:8080
+    ports:
+      - 8080:8080
 
   redis:
     container_name: redis.the-auth-app
