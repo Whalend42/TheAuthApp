@@ -28,14 +28,17 @@ export class BufferedUser implements User {
     secret(): Promise<string> {
         return new Promise<string>((resolve) => resolve(this._secret));
     }
-    changeName(name: string): User {
-        throw new Error("Method not implemented.");
+    async changeName(name: string): Promise<User> {
+        await this._origin.changeName(name);
+        return new BufferedUser(this._origin, this._email, name, this._secret)
     }
-    changeEmail(email: string): User {
-        throw new Error("Method not implemented.");
+    async changeEmail(email: string): Promise<User> {
+        await this._origin.changeEmail(email);
+        return new BufferedUser(this._origin, email, this._name, this._secret)
     }
-    changeSecret(secret: string): User {
-        throw new Error("Method not implemented.");
+    async changeSecret(secret: string): Promise<User> {
+        await this._origin.changeSecret(secret);
+        return new BufferedUser(this._origin, this._email, this._name, secret)
     }
     isNull(): boolean {
         return false;

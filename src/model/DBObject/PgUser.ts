@@ -59,14 +59,41 @@ export class PgUser implements User {
         }
     }
 
-    changeName(name: string): User {
-        throw new Error("Method not implemented.");
+    async changeName(name: string): Promise<User> {
+        try {
+            let result = "";
+            const r = await this._db.result('UPDATE name SET name = $1 FROM test_user WHERE id = $2', [name, this._id]);
+            if (r.rowCount !== 1) {
+                throw new Error("?");
+            }
+            return this;
+        } catch (error) {
+            throw new Error("?");
+        }
     }
-    changeEmail(email: string): User {
-        throw new Error("Method not implemented.");
+    async changeEmail(email: string): Promise<User> {
+        try {
+            let result = "";
+            const r = await this._db.result('UPDATE email SET email = $1 FROM test_user WHERE id = $2', [email, this._id]);
+            if (r.rowCount !== 1) {
+                throw new Error("?");
+            }
+            return this;
+        } catch (error) {
+            throw new Error("?");
+        }
     }
-    changeSecret(secret: string): User {
-        throw new Error("Method not implemented.");
+    async changeSecret(secret: string): Promise<User> {
+        try {
+            let result = "";
+            const r = await this._db.result('UPDATE secret SET secret = $1 FROM test_user WHERE id = $2', [secret, this._id]);
+            if (r.rowCount !== 1) {
+                throw new Error("?");
+            }
+            return this;
+        } catch (error) {
+            throw new Error("?");
+        }
     }
     isNull(): boolean {
         return false;

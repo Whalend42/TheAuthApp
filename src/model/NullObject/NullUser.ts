@@ -13,13 +13,13 @@ export class NullUser implements User {
     secret(): Promise<string> {
         throw new Error("Method not implemented.");
     }
-    changeName(name: string): User {
+    changeName(name: string): Promise<User> {
         throw new Error("Method not implemented.");
     }
-    changeEmail(email: string): User {
+    changeEmail(email: string): Promise<User> {
         throw new Error("Method not implemented.");
     }
-    changeSecret(secret: string): User {
+    changeSecret(secret: string): Promise<User> {
         throw new Error("Method not implemented.");
     }
     isNull(): boolean {

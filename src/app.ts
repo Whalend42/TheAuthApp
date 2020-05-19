@@ -17,12 +17,16 @@ const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
     users: async () => await pgUsers.many(),
-    user: async (parent, args) => await pgUsers.one(args.id)
+    user: async (_, args) => await pgUsers.one(args.id)
   },
   User: {
     id: async (parent: User) => await parent.id(),
     email: async (parent: User) => await parent.email(),
     name: async (parent: User) => await parent.name(),
+  },
+  Mutation: {
+    addUser: async (_, args) => await pgUsers.add(args.email, args.name, args.secret),
+    deleteUser: async (_, args) => await pgUsers.delete(args.id),
   },
 }
 

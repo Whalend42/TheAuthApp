@@ -4,9 +4,9 @@ export interface User {
     name(): Promise<string>;
     secret(): Promise<string>;
     
-    changeName(name: string): User;
-    changeEmail(email: string): User;
-    changeSecret(secret: string): User;
+    changeName(name: string): Promise<User>;
+    changeEmail(email: string): Promise<User>;
+    changeSecret(secret: string): Promise<User>;
 
     isNull(): boolean;
 }
