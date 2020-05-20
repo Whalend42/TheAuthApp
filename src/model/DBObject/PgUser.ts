@@ -49,29 +49,29 @@ export class PgUser implements User {
     }
 
     async changeName(name: string): Promise<User> {
-        let result = "";
         const r = await this._db.result(`UPDATE name SET name = $1 FROM ${this._table} WHERE id = $2`, [name, this._id]);
         if (r.rowCount !== 1) {
             throw new Error(`For some reason it was not possible to change name of user: ${this._id}`);
         }
         return this;
     }
+
     async changeEmail(email: string): Promise<User> {
-        let result = "";
-        const r = await this._db.result(`UPDATE email SET email = $1 FROM ${this._table} WHERE id = $2`, [email, this._id]);
-        if (r.rowCount !== 1) {
+        const result = await this._db.result(`UPDATE email SET email = $1 FROM ${this._table} WHERE id = $2`, [email, this._id]);
+        if (result.rowCount !== 1) {
             throw new Error(`For some reason it was not possible to change email of user: ${this._id}`);
         }
         return this;
     }
+
     async changeSecret(secret: string): Promise<User> {
-        let result = "";
-        const r = await this._db.result(`UPDATE secret SET secret = $1 FROM ${this._table} WHERE id = $2`, [secret, this._id]);
-        if (r.rowCount !== 1) {
+        const result = await this._db.result(`UPDATE secret SET secret = $1 FROM ${this._table} WHERE id = $2`, [secret, this._id]);
+        if (result.rowCount !== 1) {
             throw new Error(`For some reason it was not possible to change secret of user: ${this._id}`);
         }
         return this;
     }
+    
     isNull(): boolean {
         return false;
     }

@@ -1,6 +1,4 @@
 import { GraphQLServer } from 'graphql-yoga'
-import * as pgPromise from 'pg-promise';
-import {IInitOptions, IDatabase, IMain} from 'pg-promise';
 import { PgUsers } from './model/DBObject/PgUsers';
 import { User } from './model/Interface/User';
 
@@ -30,9 +28,8 @@ const resolvers = {
   },
 }
 
-// 3
 const server = new GraphQLServer({
   typeDefs: './src/graphQL/schema/schemav2.graphql',
   resolvers,
-})
+});
 server.start(options, () => console.log(`Server is running on http://localhost:${options.port}`))

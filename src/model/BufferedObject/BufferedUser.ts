@@ -1,6 +1,4 @@
 import { User } from "./../Interface/User";
-import { NullUser } from "./../NullObject/NullUser";
-import { PgUser } from "./../DBObject/PgUser";
 
 export class BufferedUser implements User {
 

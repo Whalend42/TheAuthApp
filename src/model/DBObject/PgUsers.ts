@@ -31,23 +31,17 @@ export class PgUsers implements Users {
         if (one !== null) {
             const pgUser = new PgUser(this._db, one.id.toString());
             result = new BufferedUser(pgUser, one.email, one.name, one.secret);
-            console.log(await result.email());
-            console.log(await result.id());
         }
         return result;
     }
 
     async add(email: string, name: string, secret: string): Promise<User> {
-        try {
-            let result = new NullUser();
-            const res = await this._db.result(`INSERT INTO ${this._table}(name, email, secret) VALUES($1, $2, $3) RETURNING id`, [name, email, secret]);
-            assert(typeof res?.rows[0]?.id !== "undefined", "for some reason insertion failed");
-            const pgUser = new PgUser(this._db, res.rows[0].id);
-            result = new BufferedUser(pgUser, email, name, secret);
-            return result;
-        } catch (error) {
-            throw new Error(error);
-        }
+        let result = new NullUser();
+        const res = await this._db.result(`INSERT INTO ${this._table}(name, email, secret) VALUES($1, $2, $3) RETURNING id`, [name, email, secret]);
+        assert(typeof res?.rows[0]?.id !== "undefined", "for some reason insertion failed");
+        const pgUser = new PgUser(this._db, res.rows[0].id);
+        result = new BufferedUser(pgUser, email, name, secret);
+        return result;
     }
 
     async delete(arg: string | User): Promise<User> {
@@ -64,8 +58,6 @@ export class PgUsers implements Users {
         return user;
     }
 }
-
-//declare function assert(value: unknown): asserts value;
 
 function isUser(user: User | string): user is User {
     return (user as User).id !== undefined;
