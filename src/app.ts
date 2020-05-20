@@ -1,15 +1,35 @@
-import express from 'express';
+import { GraphQLServer } from 'graphql-yoga'
+import { PgUsers } from './model/DBObject/PgUsers';
+import { User } from './model/Interface/User';
 
-const app = express();
-const port = 8080;
+const options = {
+  port: 8080,
+};
 
-app.get('/', (req, res) => {
-  res.send('The sedulous hyena ate the antelope! modified');
+const pgp = require('pg-promise')();
+const db = pgp("postgres://theuser:thepwd@db:5432/db");
+
+const pgUsers = new PgUsers(db);
+
+const resolvers = {
+  Query: {
+    info: () => `This is the API of a Hackernews Clone`,
+    users: async () => await pgUsers.many(),
+    user: async (_, args) => await pgUsers.one(args.id)
+  },
+  User: {
+    id: async (parent: User) => await parent.id(),
+    email: async (parent: User) => await parent.email(),
+    name: async (parent: User) => await parent.name(),
+  },
+  Mutation: {
+    addUser: async (_, args) => await pgUsers.add(args.email, args.name, args.secret),
+    deleteUser: async (_, args) => await pgUsers.delete(args.id),
+  },
+}
+
+const server = new GraphQLServer({
+  typeDefs: './src/graphQL/schema/schemav2.graphql',
+  resolvers,
 });
-
-app.listen(port, err => {
-  if (err) {
-    return console.error(err);
-  }
-  return console.log(`server is listening on ${port}`);
-});
+server.start(options, () => console.log(`Server is running on http://localhost:${options.port}`))
