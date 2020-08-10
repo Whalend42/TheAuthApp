@@ -4,6 +4,12 @@ type User {
   name: String!
 }
 
+type AuthPayload {
+  shortToken: String
+  longToken: String
+  user: User
+}
+
 type Query {
   info: String!
   users: [User!]!
@@ -11,6 +17,7 @@ type Query {
 }
 
 type Mutation {
-  addUser(email: String!, name: String!, secret: String!): User!
+  signup(email: String!, name: String!, secret: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload
   deleteUser(id: String!): User!
 }

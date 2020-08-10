@@ -8,5 +8,7 @@ export interface User {
     changeEmail(email: string): Promise<User>;
     changeSecret(secret: string): Promise<User>;
 
+    login(): Promise<void>;
+
     isNull(): boolean;
 }

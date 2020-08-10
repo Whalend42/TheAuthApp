@@ -72,6 +72,10 @@ export class PgUser implements User {
         return this;
     }
     
+    login(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    
     isNull(): boolean {
         return false;
     }

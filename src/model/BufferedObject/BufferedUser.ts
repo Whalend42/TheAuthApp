@@ -13,6 +13,9 @@ export class BufferedUser implements User {
         this._name = name;
         this._secret = secret;
     }
+    login(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
 
     id(): Promise<string> {
         return new Promise<string>((resolve) => resolve(this._origin.id()));

@@ -1,6 +1,9 @@
 import { User } from "./../Interface/User";
 
 export class NullUser implements User {
+    login(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
     id(): Promise<string> {
         throw new Error("Method not implemented.");
     }

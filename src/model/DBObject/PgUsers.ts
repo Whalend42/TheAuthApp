@@ -14,6 +14,16 @@ export class PgUsers implements Users {
         this._db = db;
     }
 
+    async findFromEmail(email: string): Promise<User> {
+        let result = new NullUser();
+        const one = await this._db.oneOrNone(`SELECT * FROM ${this._table} WHERE email = $1`, email);
+        if (one !== null) {
+            const pgUser = new PgUser(this._db, one.id.toString());
+            result = new BufferedUser(pgUser, one.email, one.name, one.secret);
+        }
+        return result;
+    }
+
     async many(): Promise<User[]> {
         const all = await this._db.any(`SELECT id, email, name, secret FROM ${this._table}`);
 
