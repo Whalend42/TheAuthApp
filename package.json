@@ -44,6 +44,6 @@
     "graphql": "^15.0.0",
     "graphql-yoga": "^1.18.3",
     "pg-promise": "^10.5.5",
-    "redis": "^3.0.2"
+    "redis": "^3.1.1"
   }
 }
